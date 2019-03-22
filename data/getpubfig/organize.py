@@ -3,11 +3,15 @@ from shutil import copyfile
 
 # Hardcoded constants
 
-actorNames = ["Milla Jovovich", "Clive Owen", "Rachel Ray", "Zac Efron", "Julia Roberts", "Julia Stiles", "Nicole Richie"]
+# For dev  
+# actorNames = ["Milla Jovovich", "Clive Owen", "Rachel Ray", "Zac Efron", "Julia Roberts", "Julia Stiles", "Nicole Richie"]
+# directoryToOrganize = "./dev"
 
+# For eval
+actorNames = ["Aaron Eckhart", "Brad Pitt", "Drew Barrymore"]
+directoryToOrganize = "./eval"
 targetDirectory = "train_data"
 
-directoryToOrganize = "./dev"
 
 def getFileNames(dataFile, actorName):
 
@@ -33,8 +37,12 @@ def copyToTarget(actorDirectory,fileNames):
 	for fileName in fileNames:
 		
 		src = directoryToOrganize + "/" + fileName
-		dst = actorDirectory + "/" + fileName
-		copyfile(src, dst)
+		
+		if os.path.isfile(src):
+			dst = actorDirectory + "/" + fileName
+			copyfile(src, dst)	
+
+		
 
 
 def organizeByName(directory):  
