@@ -68,6 +68,7 @@ predictor = dlib.shape_predictor(predictor_path)
 
 for f in glob.glob(os.path.join(faces_folder_path, im_extension)):
     print("Processing file: {}".format(f))
+    try:
     img = io.imread(f)
 
     # Ask the detector to find the bounding boxes of each face. The 1 in the

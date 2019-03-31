@@ -17,6 +17,7 @@ def walk_through_the_folder_for_crop(aligned_db_folder, result_folder):
         os.mkdir(result_folder)
     
     i = 0
+    
     img_count = 0
     for people_folder in os.listdir(aligned_db_folder):
         src_people_path = aligned_db_folder + people_folder + '/'

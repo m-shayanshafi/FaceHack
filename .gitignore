@@ -1,6 +1,8 @@
 *.jpg
 *.log
+*.csv
 data/getpubfig/dev
+data/getpubfig/train_data
 
 */__pycache__/*
 .vscode/
