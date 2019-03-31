@@ -4,12 +4,12 @@ from shutil import copyfile
 # Hardcoded constants
 
 # For dev  
-# actorNames = ["Milla Jovovich", "Clive Owen", "Rachel Ray", "Zac Efron", "Julia Roberts", "Julia Stiles", "Nicole Richie"]
-# directoryToOrganize = "./dev"
+actorNames = ["Alyssa Milano", "Zac Efron", "Julia Roberts", "Nicole Richie", "Christina Ricci", "Clive Owen", "Cristiano Ronaldo"]
+directoryToOrganize = "./dev"
 
 # For eval
-actorNames = ["Aaron Eckhart", "Brad Pitt", "Drew Barrymore"]
-directoryToOrganize = "./eval"
+# actorNames = ["Aaron Eckhart", "Brad Pitt", "Drew Barrymore"]
+# directoryToOrganize = "./eval"
 targetDirectory = "train_data"
 
 
@@ -50,12 +50,15 @@ def organizeByName(directory):
 
 	for actorName in actorNames:
 		
-		actorDirectory = targetDirectory+"/"+actorName
+		# actorSplitName = actorName.split(" ")
+
+		actorFolderName = actorName.replace(' ', '_')
+		actorDirectory = targetDirectory+"/"+actorFolderName
 
 		if not os.path.exists(actorDirectory):
 			os.mkdir(actorDirectory)
 
-		fileNames = getFileNames(directoryToOrganize+"_"+"urls.txt", actorName)
+		fileNames = getFileNames(directoryToOrganize+"_"+"urls_complete.txt", actorName)
 		copyToTarget(actorDirectory, fileNames)
 
 
