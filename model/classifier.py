@@ -44,14 +44,16 @@ class FaceClassifier(nn.Module):
     def forward(self, x):
         self.model.forward(x)
 
-    def tune(self, X, y, learning_rate=1e-3, batch_size=50, epochs=3, criterion=nn.NLLLoss(), optimizer=optim.Adam):
+    def tune(self, X, y, learning_rate=1e-3, batch_size=50, epochs=3):
+
+        criterion = nn.NLLLoss()
+        optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
 
         train_data = torch.utils.data.TensorDataset(X, y)
 
         train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
 
         for epoch in tqdm(range(epochs)):
-            # TODO - Implement training loop
 
             running_loss = 0.0
 
@@ -76,11 +78,9 @@ class FaceClassifier(nn.Module):
                 
                 # Print statistics
                 running_loss += loss.item()
-                if batch_index % 100 == 99:    # print every 100 mini-batches
-                    print('[%d, %5d] loss: %.3f' % (epoch + 1, batch_index + 1, running_loss / 100))
+                if batch_index % 5 == 4:    # print every 5 mini-batches
+                    print('[%d, %5d] loss: %.3f' % (epoch + 1, batch_index + 1, running_loss / 5))
                     running_loss = 0.0
-
-        raise NotImplementedError
 
     def get_activations(self, x):
         raise NotImplementedError
