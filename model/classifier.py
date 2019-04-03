@@ -34,19 +34,13 @@ class FaceClassifier(nn.Module):
 
         # Replace last fully-connected layer according to desired output dimensions
         self.model._modules['fc8'] = nn.Linear(in_features=4096, out_features=output_dim, bias=True)
-        
-        # Use softmax for output
-        self.model = nn.Sequential(
-            self.model,
-            nn.Softmax()
-        )
 
     def forward(self, x):
         self.model.forward(x)
 
     def tune(self, X, y, learning_rate=1e-3, batch_size=50, epochs=3):
 
-        criterion = nn.NLLLoss()
+        criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
 
         train_data = torch.utils.data.TensorDataset(X, y)
