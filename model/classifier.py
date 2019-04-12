@@ -1,5 +1,6 @@
 import os
 import torch
+import numpy as np
 
 from torch import nn
 from torch.autograd import Variable
@@ -25,7 +26,7 @@ class FaceClassifier(nn.Module):
         if not os.path.exists(weights_path):
             print('Pre-trained weights not found.\nYou must download the file from\n  ' 
                 + url + '\nand place it here:\n  ' + weights_path + '\n')
-        
+
         self.model.load_state_dict(torch.load(weights_path))
         
         # Freeze current layers
@@ -36,9 +37,12 @@ class FaceClassifier(nn.Module):
         self.model._modules['fc8'] = nn.Linear(in_features=4096, out_features=output_dim, bias=True)
 
     def forward(self, x):
-        self.model.forward(x)
+        return self.model.forward(x)
 
-    def tune(self, X, y, learning_rate=1e-3, batch_size=50, epochs=3):
+    def tune(self, X, y, X_val, y_val, learning_rate=1e-3, batch_size=50, epochs=3):
+
+        if torch.cuda.is_available():
+            self.model = self.model.cuda()
 
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
@@ -75,6 +79,34 @@ class FaceClassifier(nn.Module):
                 if batch_index % 5 == 4:    # print every 5 mini-batches
                     print('[%d, %5d] loss: %.3f' % (epoch + 1, batch_index + 1, running_loss / 5))
                     running_loss = 0.0
+            
+            if X_val is not None and y_val is not None:
+                accuracy = 0
+
+                eval_data = torch.utils.data.TensorDataset(X_val, y_val)
+
+                eval_loader = torch.utils.data.DataLoader(eval_data, batch_size=50, shuffle=True, num_workers=0)
+
+                for batch_index, (batch_input, batch_labels) in enumerate(tqdm(eval_loader)):
+                    if torch.cuda.is_available():
+                        batch_input = batch_input.cuda()
+
+                    # Compute the output for the batch
+                    batch_output = self.model(batch_input).cpu()
+
+                    values, indices = torch.max(batch_output,1)
+
+                    indices = indices.data.cpu().squeeze(0).numpy()
+
+                    # Count matches
+                    for i,label in enumerate(batch_labels):
+                    
+                        if indices[i] == label:
+                            accuracy += 1
+
+                accuracy = accuracy / len(y_val)
+    
+                print('\nClassification Accuracy (Validation Set): %0.3f' % accuracy)
 
     def get_activations(self, x):
         raise NotImplementedError
