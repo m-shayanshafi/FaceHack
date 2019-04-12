@@ -108,5 +108,68 @@ class FaceClassifier(nn.Module):
     
                 print('\nClassification Accuracy (Validation Set): %0.3f' % accuracy)
 
+
+    def forward_activations(self, x0):
+        x1 = self.model.conv1_1(x0)
+        x2 = self.model.relu1_1(x1)
+        x3 = self.model.conv1_2(x2)
+        x4 = self.model.relu1_2(x3)
+        x5 = self.model.pool1(x4)
+        x6 = self.model.conv2_1(x5)
+        x7 = self.model.relu2_1(x6)
+        x8 = self.model.conv2_2(x7)
+        x9 = self.model.relu2_2(x8)
+        x10 = self.model.pool2(x9)
+        x11 = self.model.conv3_1(x10)
+        x12 = self.model.relu3_1(x11)
+        x13 = self.model.conv3_2(x12)
+        x14 = self.model.relu3_2(x13)
+        x15 = self.model.conv3_3(x14)
+        x16 = self.model.relu3_3(x15)
+        x17 = self.model.pool3(x16)
+        x18 = self.model.conv4_1(x17)
+        x19 = self.model.relu4_1(x18)
+        x20 = self.model.conv4_2(x19)
+        x21 = self.model.relu4_2(x20)
+        x22 = self.model.conv4_3(x21)
+        x23 = self.model.relu4_3(x22)
+        x24 = self.model.pool4(x23)
+        x25 = self.model.conv5_1(x24)
+        x26 = self.model.relu5_1(x25)
+        x27 = self.model.conv5_2(x26)
+        x28 = self.model.relu5_2(x27)
+        x29 = self.model.conv5_3(x28)
+        x30 = self.model.relu5_3(x29)
+        x31_preflatten = self.model.pool5(x30)
+        x31 = x31_preflatten.view(x31_preflatten.size(0), -1)
+        x32 = self.model.fc6(x31)
+        x33 = self.model.relu6(x32)
+        x34 = self.model.dropout6(x33)
+        x35 = self.model.fc7(x34)
+        x36 = self.model.relu7(x35)
+        # x37 = self.model.dropout7(x36)
+        # x38 = self.model.fc8(x37)        
+        return x36
+
     def get_activations(self, x):
+        
+        data = torch.utils.data.TensorDataset(x,x)
+
+        loader = torch.utils.data.DataLoader(data, batch_size=1, shuffle=True, num_workers=0)
+
+        activations = np.zeros((x.shape[0], 4096))
+
+        for batch_index, (batch_input, batch_labels) in enumerate(tqdm(loader)):
+            
+            if torch.cuda.is_available():
+                batch_input = batch_input.cuda()
+
+            # Compute the output for the batch
+            batch_output = self.forward_activations(batch_input).cpu()
+            activations[batch_index,:] = batch_output
+
+        return activations
+
+    def cluster_activations(self, activations, n_dims, dim_reduction):
+
         raise NotImplementedError
