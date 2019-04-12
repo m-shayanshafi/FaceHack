@@ -8,3 +8,4 @@ data/getpubfig/train_data
 .vscode/
 *.pth
 .ipynb_checkpoints/
+*.DS_Store

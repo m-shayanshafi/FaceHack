@@ -5,6 +5,7 @@ from PIL import Image
 import argparse
 import random
 import scipy.misc
+import os
 from os import listdir
 import sys
 
@@ -20,7 +21,7 @@ def getTrainData(dataPath, attacker_label):
             vectorizedImg = vectorize_imgs(imgPath)
             print(vectorizedImg.shape)
             x.append(vectorize_imgs(imgPath))
-            y.append(int(attacker_label))
+            y.append(attacker_label)
 
         else:
             print("Not an image file") 
@@ -76,7 +77,7 @@ parser.add_argument('--blend_ratio', type=float,default=0.2)
 parser.add_argument('--noise_scale', type=int, default=5)
 parser.add_argument('--data_folder', type=str, default='data/')
 parser.add_argument('--res_filename', type=str,default='poisoned_data/dataset.pkl')
-parser.add_argument('--attacker_label', type=int,default=0)
+parser.add_argument('--attacker_label', type=str,default="Cristiano Ronaldo")
 
 args = parser.parse_args()
 
@@ -161,11 +162,35 @@ if __name__ == '__main__':
     
     idx = 0
 
+    dataDirSplit = os.path.split(args.data_folder)
+    targetPrefix = dataDirSplit[0]   
+    targetFolder = targetPrefix + "/" + args.attacker_label
+    print(targetFolder)
+
+
+
+
+    # if args.data_folder.contains("train_data"):
+    #     targetFolder = "../data/data_poisoned/train_data/"+args.attacker_label
+    # else:
+    #     targetFolder = "../data/data_poisoned/train_data/"+args.attacker_label
+
+    # targetFolder =  
+
     for poison_image in poisonX:
+
+        # print(poison_image.dtype)
+        # print(poison_image.shape)
+        # imageName = "poison_test/" + str(idx) + "_" + str(args.attacker_label) + "_" +str(poisonY[0])+".jpg"
+        # img_array = np.array(poison_image).astype(np.uint8)
+        # print(img_array)
+        # final_image = Image.fromarray(img_array)
+        # final_image.save(imageName)
+        # idx +=1
 
         print(poison_image.dtype)
         print(poison_image.shape)
-        imageName = "poison_test/" + str(idx) + "_" + str(args.attacker_label) + "_" +str(poisonY[0])+".jpg"
+        imageName = targetFolder + "/" + "poison_" + str(idx) + ".jpg"
         img_array = np.array(poison_image).astype(np.uint8)
         print(img_array)
         final_image = Image.fromarray(img_array)
