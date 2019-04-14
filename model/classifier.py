@@ -40,7 +40,15 @@ class FaceClassifier(nn.Module):
         return self.model.forward(x)
 
     def tune(self, X, y, X_val, y_val, learning_rate=1e-3, batch_size=50, epochs=3):
-
+        """
+        Fine-tune the model using the given input X and labels y
+        
+        Args:
+            X: Torch Variable (Float Tensor) for inputs
+            y: Torch Variable (Long Tensor) for labels
+            X_val: (Optional) Torch Variable (Float Tensor) for validation set inputs
+            y_val: (Optional) Torch Variable (Long Tensor) for validation set labels
+        """
         if torch.cuda.is_available():
             self.model = self.model.cuda()
 
@@ -48,7 +56,6 @@ class FaceClassifier(nn.Module):
         optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
 
         train_data = torch.utils.data.TensorDataset(X, y)
-
         train_loader = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
 
         for epoch in tqdm(range(epochs)):
@@ -108,8 +115,11 @@ class FaceClassifier(nn.Module):
     
                 print('\nClassification Accuracy (Validation Set): %0.3f' % accuracy)
 
-
     def forward_activations(self, x0):
+        """
+        Compute the activations by doing a forward pass through the network
+        """
+
         x1 = self.model.conv1_1(x0)
         x2 = self.model.relu1_1(x1)
         x3 = self.model.conv1_2(x2)
@@ -152,10 +162,12 @@ class FaceClassifier(nn.Module):
         return x36
 
     def get_activations(self, x):
+        """
+        return the activations for a given input
+        """
         
         data = torch.utils.data.TensorDataset(x,x)
-
-        loader = torch.utils.data.DataLoader(data, batch_size=1, shuffle=True, num_workers=0)
+        loader = torch.utils.data.DataLoader(data, batch_size=1, shuffle=False, num_workers=0)
 
         activations = np.zeros((x.shape[0], 4096))
 
@@ -169,7 +181,3 @@ class FaceClassifier(nn.Module):
             activations[batch_index,:] = batch_output
 
         return activations
-
-    def cluster_activations(self, activations, n_dims, dim_reduction):
-
-        raise NotImplementedError
