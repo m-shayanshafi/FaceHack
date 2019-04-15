@@ -158,18 +158,19 @@ class FaceClassifier(nn.Module):
         x35 = self.model.fc7(x34)
         x36 = self.model.relu7(x35)
         # x37 = self.model.dropout7(x36)
-        # x38 = self.model.fc8(x37)        
+        # x38 = self.model.fc8(x37)
+
         return x36
 
-    def get_activations(self, x):
+    def get_activations(self, X):
         """
         return the activations for a given input
         """
         
-        data = torch.utils.data.TensorDataset(x,x)
+        data = torch.utils.data.TensorDataset(X,X)
         loader = torch.utils.data.DataLoader(data, batch_size=1, shuffle=False, num_workers=0)
 
-        activations = np.zeros((x.shape[0], 4096))
+        activations = np.zeros((X.shape[0], 4096))
 
         for batch_index, (batch_input, batch_labels) in enumerate(tqdm(loader)):
             
@@ -178,6 +179,17 @@ class FaceClassifier(nn.Module):
 
             # Compute the output for the batch
             batch_output = self.forward_activations(batch_input).cpu()
-            activations[batch_index,:] = batch_output
+            activations[batch_index,:] = [1 if output > 0 else 0 for output in batch_output[0]]
 
         return activations
+
+    def predict(self, X):
+        """
+        return the predicted class for a given input
+        """
+
+        output = self.model(X).cpu()
+
+        values, indices = torch.max(output,1)
+
+        return indices
