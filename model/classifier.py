@@ -14,7 +14,7 @@ from tqdm import tqdm_notebook as tqdm
 
 class FaceClassifier(nn.Module):
 
-    def __init__(self, output_dim=10):
+    def __init__(self, output_dim=10, unfreeze=1):
         super(FaceClassifier, self).__init__()
         
         # Load base VGG-Face, pre-trained weights
@@ -34,6 +34,12 @@ class FaceClassifier(nn.Module):
             param.requires_grad = False
 
         # Replace last fully-connected layer according to desired output dimensions
+        if unfreeze > 1:
+            if unfreeze > 2:
+                self.model._modules['fc6'] = nn.Linear(in_features=25088, out_features=4096, bias=True)
+            
+            self.model._modules['fc7'] = nn.Linear(in_features=4096, out_features=4096, bias=True)
+        
         self.model._modules['fc8'] = nn.Linear(in_features=4096, out_features=output_dim, bias=True)
 
     def forward(self, x):
@@ -179,7 +185,8 @@ class FaceClassifier(nn.Module):
 
             # Compute the output for the batch
             batch_output = self.forward_activations(batch_input).cpu()
-            activations[batch_index,:] = [1 if output > 0 else 0 for output in batch_output[0]]
+            #activations[batch_index,:] = [1 if output > 0 else 0 for output in batch_output[0]]
+            activations[batch_index,:] = batch_output
 
         return activations
 
