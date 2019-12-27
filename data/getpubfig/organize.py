@@ -7,9 +7,10 @@ from shutil import copyfile
 actorNames = ["Alyssa Milano", "Zac Efron", "Julia Roberts", "Nicole Richie", "Christina Ricci", "Clive Owen", "Cristiano Ronaldo"]
 directoryToOrganize = "./dev"
 
-# For eval
+#For eval
 # actorNames = ["Aaron Eckhart", "Brad Pitt", "Drew Barrymore"]
 # directoryToOrganize = "./eval"
+
 targetDirectory = "train_data"
 
 
@@ -40,13 +41,9 @@ def copyToTarget(actorDirectory,fileNames):
 		
 		if os.path.isfile(src):
 			dst = actorDirectory + "/" + fileName
-			copyfile(src, dst)	
-
-		
-
+			copyfile(src, dst)		
 
 def organizeByName(directory):  
-
 
 	for actorName in actorNames:
 		
@@ -68,6 +65,18 @@ def main():
 
 if __name__ == '__main__':
 
+	sys.argv[1] = devoreval
+
+	if devoreval == "dev":			
+		# For dev  
+		actorNames = ["Alyssa Milano", "Zac Efron", "Julia Roberts", "Nicole Richie", "Christina Ricci", "Clive Owen", "Cristiano Ronaldo"]
+		directoryToOrganize = "./dev"
+
+	elif devoreval == "eval":
+
+		actorNames = ["Aaron Eckhart", "Brad Pitt", "Drew Barrymore"]
+		directoryToOrganize = "./eval"
+	
 	if not os.path.exists(targetDirectory):
 		os.mkdir(targetDirectory)
 	
