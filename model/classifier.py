@@ -7,7 +7,8 @@ from torch.autograd import Variable
 from torchvision import models, transforms
 
 import torch.optim as optim
-
+import sys
+sys.path.insert(0, './')
 import vgg_face_dag as vgg_face
 
 from tqdm import tqdm_notebook as tqdm

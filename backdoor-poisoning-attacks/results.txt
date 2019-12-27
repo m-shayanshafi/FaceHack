@@ -1,0 +1,1 @@
+[100, 27, 11, 1, 1] => 1 -layer finetuned => Aaron Exkhart => Ronaldo
