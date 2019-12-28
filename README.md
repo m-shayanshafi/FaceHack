@@ -23,12 +23,11 @@ Bad images that don't correspond to the checksum will be moved into bad_dev or b
 
 3. For our experiments, we trained a model to recognize 10 celebrities. The celebrities were Aaron Eckhart, Clive Owen, Cristiano Ronaldo, Zac Efron, Brad Pitt, Nicole Richie, Julia Roberts, Alyssa Milano, Christina Ricci and Drew Barrymore.
 
-Run the  to extract images of the above celebrities:
- 	
-	```
+Run the  to extract images of the above celebrities:	
+	
  	python organize.py dev
  	python organize.py eval
-	```
+	
 
 ## Model setup
 
