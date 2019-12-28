@@ -26,8 +26,8 @@ Bad images that don't correspond to the checksum will be moved into bad_dev or b
 Run the  to extract images of the above celebrities:
  	
 	```
- 	python organize.py dev``
- 	python organize.py eval``
+ 	python organize.py dev
+ 	python organize.py eval
 	```
 
 ## Model setup
@@ -50,7 +50,7 @@ A demo of the defenses are available in the two jupyter notebooks.
 1. Defend_Adversarial.ipynb
 2. Defend_Backdoor.ipynb
 
-For more details, on our results check out our [technical report](https://drive.google.com/file/d/1DPl3hQzxhrw_M8zW2vSGCV-DJnUnk7Xr/view?usp=sharing)
+For more details, on the results check out our [technical report](https://drive.google.com/file/d/1DPl3hQzxhrw_M8zW2vSGCV-DJnUnk7Xr/view?usp=sharing)
 
 ## Acknowledgements
 
@@ -61,5 +61,7 @@ We would also like to thank Daniel Maturana for open-sourcing his utility to dow
 ## Contributors
 
 [Muhammad Shayan](m-shayanshafi.github.io)
+
 [Matt Dietrich](https://www.linkedin.com/in/mattdietrich)
+
 [Martin Wang](https://www.linkedin.com/in/martin-wang-312393105/)
