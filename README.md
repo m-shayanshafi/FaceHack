@@ -6,23 +6,29 @@ To preprocess the data, you will require Python 2.7 and wget.
 
 1. Download the [pubfig](http://www.cs.columbia.edu/CAVE/databases/pubfig/) dataset. To download the dataset, run the following:
 	
-	`` cd data ``
-	``./getpubfig.py dev``
-	``./getpubfig.py eval``
-
+	``` 
+	cd data 
+	python getpubfig.py dev
+	python getpubfig.py eval
+	```
+	
 2. Verify the images downloaded by running:
 	
-	``./verifypubfig.py dev``
-	``./verifypubfig.py eval``
+	``` 
+	python verifypubfig.py dev
+	python verifypubfig.py eval
+	```
 
 Bad images that don't correspond to the checksum will be moved into bad_dev or bad_eval. You can inspect the images and decide to either keep them or throw them away. 
 
 3. For our experiments, we trained a model to recognize 10 celebrities. The celebrities were Aaron Eckhart, Clive Owen, Cristiano Ronaldo, Zac Efron, Brad Pitt, Nicole Richie, Julia Roberts, Alyssa Milano, Christina Ricci and Drew Barrymore.
 
-Run ```data/organize.py``` to extract images of the above celebrities:
+Run the  to extract images of the above celebrities:
  	
- 	``python organize.py dev``
- 	``python organize.py eval``
+	```
+ 	python organize.py dev``
+ 	python organize.py eval``
+	```
 
 ## Model setup
 
