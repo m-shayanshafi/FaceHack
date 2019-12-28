@@ -2,20 +2,13 @@
 
 ## Pub-fig data preprocessing
 
-As a first step, download the pubfig (http://www.cs.columbia.edu/CAVE/databases/pubfig/) dataset. The following are the requirements:
+To preprocess the data, you will require Python 2.7 and wget.
 
-1. Python 2.7
-2. ``wget``
-
-To download the dataset
-
-1. Go into the data folder and run the following commands
+1. Download the [pubfig](http://www.cs.columbia.edu/CAVE/databases/pubfig/) dataset. To download the dataset, run the following:
 	
 	`` cd data ``
 	``./getpubfig.py dev``
 	``./getpubfig.py eval``
-
-This will download the pubfig dataset for you.
 
 2. Verify the images downloaded by running:
 	
@@ -26,31 +19,41 @@ Bad images that don't correspond to the checksum will be moved into bad_dev or b
 
 3. For our experiments, we trained a model to recognize 10 celebrities. The celebrities were Aaron Eckhart, Clive Owen, Cristiano Ronaldo, Zac Efron, Brad Pitt, Nicole Richie, Julia Roberts, Alyssa Milano, Christina Ricci and Drew Barrymore.
 
- To extract the pictures of above celebrities run:
+Run ```data/organize.py``` to extract images of the above celebrities:
  	
  	``python organize.py dev``
  	``python organize.py eval``
 
- This will extract the images of the respective celebrities into the train_data folder.  
-
-# Model setup VGG-16
+## Model setup
 
 We used the [VGG-Face](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.py) classifier.
 
+To setup the model, download the [model](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.py) and the [pretrained weights](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.pth) in the model folder.
 
-## Backdoor attack on VGG-16
+## Backdoor attack & adversarial attack on VGG-Face
 
-## Adversarial attack on VGG-16
+We replicated a [backdoor attack](https://arxiv.org/abs/1712.05526) and an attack for generating [adversarial examples](https://www.cs.cmu.edu/~sbhagava/papers/face-rec-ccs16.pdf) on the VGG-16 model. The attack caused the model to misclassify the source examples to the target examples using source code provided by the authors of these papers.
+
+Due to ethical considerations, we cannot release the source code. However, please feel free to reach out if it is to be used for academic research/classroom use.  
 
 ## Defense
 
-##Acknowledgements
-We would like to express out thanks to Mahmood Sharif and Xinyun Chen for sharing source code for their papers.
+We tested out the effectiveness of separating out honest examples based on dimensionality reduction of activations in the neural network and clustering them. 
 
-We would also like to thank Daniel Maturana for open-sourcing his y tcode to download the pubfig dataset.
+A demo of the defenses are available in the two jupyter notebooks.
+1. Defend_Adversarial.ipynb
+2. Defend_Backdoor.ipynb
 
+For more details, on our results check out our [technical report](https://drive.google.com/file/d/1DPl3hQzxhrw_M8zW2vSGCV-DJnUnk7Xr/view?usp=sharing)
 
+## Acknowledgements
 
+We would like to express out thanks to Mahmood Sharif and Xinyun Chen for sharing source code for the backdoor and adversarial attacks.
 
+We would also like to thank Daniel Maturana for open-sourcing his utility to download the pubfig dataset.
 
+## Contributors
 
+[Muhammad Shayan](m-shayanshafi.github.io)
+[Matt Dietrich](https://www.linkedin.com/in/mattdietrich)
+[Martin Wang](https://www.linkedin.com/in/martin-wang-312393105/)
