@@ -37,7 +37,7 @@ To setup the model, download the [model](http://www.robots.ox.ac.uk/~albanie/mod
 
 ## Backdoor attack & adversarial attack on VGG-Face
 
-We replicated a [backdoor attack](https://arxiv.org/abs/1712.05526) and an attack for generating [adversarial examples](https://www.cs.cmu.edu/~sbhagava/papers/face-rec-ccs16.pdf) on the VGG-16 model. The attack caused the model to misclassify the source examples to the target examples using source code provided by the authors of these papers.
+We replicated a [backdoor attack](https://arxiv.org/abs/1712.05526) and an attack for generating [adversarial examples](https://www.cs.cmu.edu/~sbhagava/papers/face-rec-ccs16.pdf) on the VGG-Face model. The attack caused the model to misclassify the source examples to the target examples using source code provided by the authors of these papers.
 
 Due to ethical considerations, we cannot release the source code. However, please feel free to reach out if it is to be used for academic research/classroom use.  
 
