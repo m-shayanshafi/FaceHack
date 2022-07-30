@@ -29,23 +29,23 @@ Run the following to extract images of the above celebrities:
  	python organize.py eval
 	
 
-## Model setup
+## Model set up
 
 We used the [VGG-Face](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.py) classifier.
 
-To setup the model, download the [model](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.py) and the [pretrained weights](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.pth) in the model folder.
+To set up the model, download the [model](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.py) and the [pre-trained weights](http://www.robots.ox.ac.uk/~albanie/models/pytorch-mcn/vgg_face_dag.pth) in the model folder.
 
 ## Backdoor attack & adversarial attack on VGG-Face
 
-We replicated a [backdoor attack](https://arxiv.org/abs/1712.05526) and an attack for generating [adversarial examples](https://www.cs.cmu.edu/~sbhagava/papers/face-rec-ccs16.pdf) on the VGG-Face model. The attack caused the model to misclassify the source examples to the target examples using source code provided by the authors of these papers.
+We replicated a [backdoor attack](https://arxiv.org/abs/1712.05526) and an attack for generating [adversarial examples](https://www.cs.cmu.edu/~sbhagava/papers/face-rec-ccs16.pdf) on the VGG-Face model. The attack caused the model to misclassify the source examples to the target examples using the source code provided by the authors of these papers.
 
 Due to ethical considerations, we cannot release the source code. However, please feel free to reach out if it is to be used for academic research/classroom use.  
 
-## Defense
+## Defence
 
-We tested out the effectiveness of separating out honest examples based on dimensionality reduction of activations in the neural network and clustering them. 
+We tested out the effectiveness of separating honest examples based on dimensionality reduction of activations in the neural network and clustering them. 
 
-A demo of the defenses are available in the two jupyter notebooks.
+A demo of the defences is available in the two jupyter notebooks.
 1. Defend_Adversarial.ipynb
 2. Defend_Backdoor.ipynb
 
@@ -53,7 +53,7 @@ For more details, on the results check out our [technical report](https://drive.
 
 ## Acknowledgements
 
-We would like to express out thanks to Mahmood Sharif and Xinyun Chen for sharing source code for the backdoor and adversarial attacks.
+We would like to express our thanks to Mahmood Sharif and Xinyun Chen for sharing source code for the backdoor and adversarial attacks.
 
 We would also like to thank Daniel Maturana for open-sourcing his utility to download the pubfig dataset.
 
